@@ -1,0 +1,40 @@
+﻿@using Galary.Models
+@model GalaryViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+@foreach (VideoTypes videoType in Model.VideoTypes)
+{
+
+    <h2>@videoType.VideoTypeName</h2>
+
+    if (videoType.VideosCollection != null && videoType.VideosCollection.Count > 0)
+    {
+        <table class="table">
+
+            @foreach (var item in videoType.VideosCollection)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VideoDescription)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.VideoID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.VideoID })
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+    else
+    {
+        <br />
+        <center>No Videos available</center>
+    }
+}

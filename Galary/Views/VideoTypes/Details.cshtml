@@ -1,0 +1,35 @@
+﻿@model Galary.Models.VideoTypes
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>VideoTypes</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.VideoTypeName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VideoTypeName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageUrl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ImageUrl)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.VideoTypeID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

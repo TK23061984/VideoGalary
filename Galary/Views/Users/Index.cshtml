@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Galary.Models.Users>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Users</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+@if (TempData.Keys.Contains("Error"))
+{
+    <h3 style="color:red">@TempData["Error"]</h3>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmailID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Mobile)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(model => item.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(model => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(model => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(model => item.EmailID)
+        </td>
+        <td>
+            @Html.DisplayFor(model => item.Mobile)
+        </td>
+        <td>
+            @Html.DisplayFor(model => item.IsActive)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.UserID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.UserID })
+        </td>
+    </tr>
+}
+
+</table>

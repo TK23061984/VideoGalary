@@ -1,0 +1,6 @@
+﻿@using Galary.Models
+@model IEnumerable<MenuViewModel>
+@foreach (MenuViewModel menu in Model)
+{
+    @Html.ActionLink(menu.MenuName, menu.Action, menu.Controller, new { area = "" }, new { @class = "navbar-brand" })
+}

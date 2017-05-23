@@ -1,0 +1,67 @@
+﻿@model Galary.Models.LoginViewModel
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Login.cshtml";
+}
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    
+   
+    <table>
+        @if (TempData.Keys.Contains("LoginFailed"))
+        {
+            <tr>
+                <td colspan="4">
+                    <h3 style="color:red">@TempData["LoginFailed"]</h3>
+                </td>
+            </tr>
+        }
+        <tr>
+            <br />
+            <br />
+        </tr>
+        <tr>
+            <td rowspan="2">
+            <img src="~/Image/login.png" />
+            </td>
+            <td>
+                @Html.Label("User Name")
+            </td>
+            <td>
+                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+            </td>
+            <td>
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+            </td>
+            <td>
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+            </td>
+            <td>
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+            </td>
+            <td>
+                <input type="submit" value="Login" class="btn btn-default" />
+
+            </td>
+            <td>
+
+            </td>
+        </tr>
+    </table>
+}
+

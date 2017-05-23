@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Galary.Models.Roles>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+    @if(TempData.Keys.Contains("Error"))
+    {
+        <h3 style="color:red">@TempData["Error"]</h3>
+    }
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RoleName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RoleDescription)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RoleName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RoleDescription)
+        </td>
+        @if(item.RoleID > 1)
+        { 
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.RoleID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.RoleID }) 
+        </td>
+        }
+        else
+        {
+            <td></td>
+        }
+    </tr>
+}
+
+</table>

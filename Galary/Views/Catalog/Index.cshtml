@@ -1,0 +1,40 @@
+﻿@using Galary.Models
+@model  GalaryViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h2>Video Catalog</h2>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.VideoTypes, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <!--@Html.DropDownListFor(model => model.VideoTypes, new SelectList(Model.VideoTypes, "VideoTypeID", "VideoTypeName",Model.SelectedVideoType), "--Select--", new { onchange=@"form.submit();" })-->
+                @Html.DropDownList("SelectedVideoType", new SelectList(Model.VideoTypes, "VideoTypeID", "VideoTypeName", Model.SelectedVideoType), "--Select--", new { onchange = @"form.submit();" })
+                @Html.ValidationMessageFor(model => model.VideoTypes, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @if (Model.Videos.Count > 0)
+        {
+            foreach (Videos video in Model.Videos)
+            {
+                <center>
+                    <div>
+                        <iframe width="560" height="315" frameborder="1" src="http://www.youtube.com/embed/@video.VideoURL?modestbranding=1&;rel=0" allowfullscreen></iframe>
+                    </div>
+                </center>
+            }
+        }
+        else
+        {
+        <h2><center>Videos are not available for this video type</center></h2>
+        }
+    </div>
+}
+

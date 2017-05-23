@@ -1,0 +1,2 @@
+﻿SET IDENTITY_INSERT [dbo].[Users] ON
+INSERT INTO [dbo].[Users] ([UserID], [UserName], [Password], [FirstName], [LastName], [EmailID], [Mobile], [CreatedDate], [IsActive]) VALUES (1, N'Admin', N'???

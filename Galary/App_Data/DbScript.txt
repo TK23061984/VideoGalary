@@ -1,0 +1,72 @@
+﻿CREATE TABLE [dbo].[Roles] (
+    [RoleID]          INT           IDENTITY (1, 1) NOT NULL,
+    [RoleName]        NVARCHAR (20) NOT NULL,
+    [RoleDescription] NVARCHAR (50) NULL,
+    PRIMARY KEY CLUSTERED ([RoleID] ASC)
+);
+
+
+
+CREATE TABLE [dbo].[Users] (
+    [UserID]      INT           IDENTITY (1, 1) NOT NULL,
+    [UserName]    NVARCHAR (50) NOT NULL,
+    [Password]    NVARCHAR (50) NOT NULL,
+    [FirstName]   NVARCHAR (50) NULL,
+    [LastName]    NVARCHAR (50) NULL,
+    [EmailID]     NVARCHAR (20) NULL,
+    [Mobile]      NVARCHAR (20) NULL,
+    [CreatedDate] DATE          NOT NULL,
+    [IsActive]    BIT           NOT NULL,
+    PRIMARY KEY CLUSTERED ([UserID] ASC)
+);
+
+CREATE TABLE [dbo].[UsersRoles] (
+    [UserID] INT NOT NULL,
+    [RoleID] INT NOT NULL,
+    CONSTRAINT [PK_UsersRoles] PRIMARY KEY CLUSTERED ([UserID] ASC, [RoleID] ASC),
+    CONSTRAINT [FK_dbo.UsersRoles_dbo.Roles_RoleId] FOREIGN KEY ([RoleID]) REFERENCES [dbo].[Roles] ([RoleID]) ON DELETE CASCADE,
+    CONSTRAINT [FK_dbo.UsersRoles_dbo.Users_UserId] FOREIGN KEY ([UserID]) REFERENCES [dbo].[Users] ([UserID]) ON DELETE CASCADE
+);
+
+CREATE TABLE [dbo].[VideoTypes] (
+    [VideoTypeID]   INT            IDENTITY (1, 1) NOT NULL,
+    [VideoTypeName] NVARCHAR (MAX) NOT NULL,
+    [ImageUrl]      NVARCHAR (MAX) NULL,
+    CONSTRAINT [PK_dbo.VideoTypes] PRIMARY KEY CLUSTERED ([VideoTypeID] ASC)
+);
+
+CREATE TABLE [dbo].[Videos] (
+    [VideoID]          INT            IDENTITY (1, 1) NOT NULL,
+    [VideoTypeID]      INT            NOT NULL,
+    [VideoDescription] NVARCHAR (MAX) NULL,
+    [VideoURL]         NVARCHAR (MAX) NOT NULL,
+    [VideoImage]       NVARCHAR (MAX) NULL,
+    [DisplayOrder]     INT            DEFAULT ((1)) NOT NULL,
+    [CreatedBy]        INT            NOT NULL,
+    [CreatedOn]        DATETIME       NOT NULL,
+    [UpdatedBy]        INT            NOT NULL,
+    [UpdatedOn]        DATETIME       NOT NULL,
+    CONSTRAINT [PK_dbo.Videos] PRIMARY KEY CLUSTERED ([VideoID] ASC),
+    CONSTRAINT [FK_dbo.Videos_dbo.VideoTypes_VideoTypeID] FOREIGN KEY ([VideoTypeID]) REFERENCES [dbo].[VideoTypes] ([VideoTypeID]) ON DELETE CASCADE
+);
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_VideoTypeID]
+    ON [dbo].[Videos]([VideoTypeID] ASC);
+
+CREATE TABLE [dbo].[VideoTypeRoles] (
+    [VideoTypeID] INT NOT NULL,
+    [RoleID]      INT NOT NULL,
+    CONSTRAINT [PK_VideoTypeRoles] PRIMARY KEY CLUSTERED ([VideoTypeID] ASC, [RoleID] ASC),
+    CONSTRAINT [FK_dbo.VideoTypeRoles_dbo.Roles_RoleId] FOREIGN KEY ([RoleID]) REFERENCES [dbo].[Roles] ([RoleID]) ON DELETE CASCADE,
+    CONSTRAINT [FK_dbo.VideoTypeRoles_dbo.VideoTypes_VideoTypeId] FOREIGN KEY ([VideoTypeID]) REFERENCES [dbo].[VideoTypes] ([VideoTypeID]) ON DELETE CASCADE
+);
+
+
+
+
+SET IDENTITY_INSERT [dbo].[Roles] ON
+INSERT INTO [dbo].[Roles] ([RoleID], [RoleName], [RoleDescription]) VALUES (1, N'Admin', N'Admin Role')
+SET IDENTITY_INSERT [dbo].[Roles] OFF
+
